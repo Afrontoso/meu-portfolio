@@ -1,31 +1,35 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import HeroSection from './components/pages/HeroSection';
-import Projects from './components/pages/Projects';
-import Skills from './components/pages/Skills';
-import Contact from './components/pages/Contact';
-import About from './components/pages/About';
-
-
-import Container from './components/layout/Container';
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import About from './components/About';
+import Timeline from './components/Timeline';
+import Skills from './components/Skills';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
+import { useActiveSection, useReveal } from './hooks/useScrollEffects';
+import { perfil } from './data/portfolio';
 
 function App() {
-// colocar o código abaixo no início do arquivo App.js, das rotas
+  const ativa = useActiveSection();
+  useReveal();
+
   return (
-    <Router>
-      <Navbar />
-      <Container customClass="min-height">
-        <Routes>
-          <Route exact path='/' element={<HeroSection />} />
-          <Route exact path='/projects' element={<Projects />} />
-          <Route exact path='/skills' element={<Skills />} />
-          <Route exact path='/about' element={<About />} />
-          <Route exact path='/contact' element={<Contact />} />
-        </Routes>
-      </Container>
-      <Footer />
-    </Router>
+    <>
+      <Navbar ativa={ativa} />
+      <main>
+        <Hero />
+        <About />
+        <Timeline />
+        <Skills />
+        <Projects />
+        <Contact />
+      </main>
+      <footer className="rodape">
+        <div className="container">
+          © {new Date().getFullYear()} {perfil.nome} · Feito com React
+        </div>
+      </footer>
+    </>
   );
-} export default App;
+}
+
+export default App;
